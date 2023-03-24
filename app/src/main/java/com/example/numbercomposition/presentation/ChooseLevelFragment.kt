@@ -7,13 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.numbercomposition.R
 
-class WelcomeFragment : Fragment() {
+class ChooseLevelFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_welcome, container, false)
+        return inflater.inflate(R.layout.fragment_choose_level, container, false)
     }
 }
