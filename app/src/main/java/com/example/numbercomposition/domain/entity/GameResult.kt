@@ -1,8 +1,12 @@
 package com.example.numbercomposition.domain.entity
 
-data class GameResult(
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class GameResult (
     val winner: Boolean,
     val countOfRightAnswers: Int,
     val countOfQuestion: Int,
     val gameSettings: GameSettings
-)
+) : Parcelable

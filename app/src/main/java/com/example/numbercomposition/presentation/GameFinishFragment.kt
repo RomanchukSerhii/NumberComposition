@@ -5,25 +5,79 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.numbercomposition.R
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import com.example.numbercomposition.databinding.FragmentGameBinding
+import com.example.numbercomposition.databinding.FragmentGameFinishBinding
+import com.example.numbercomposition.domain.entity.GameResult
 
 class GameFinishFragment : Fragment() {
 
-    private var _binding: FragmentGameBinding? = null
-    private val binding: FragmentGameBinding
+    private lateinit var gameResult: GameResult
+
+    private var _binding: FragmentGameFinishBinding? = null
+    private val binding: FragmentGameFinishBinding
         get() = _binding ?: throw RuntimeException("FragmentGameBinding == null")
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        parseArgs()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentGameBinding.inflate(inflater, container, false)
+        _binding = FragmentGameFinishBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        bindListeners()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun bindListeners() {
+        binding.buttonRetry.setOnClickListener {
+            retryGame()
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    retryGame()
+                }
+            })
+    }
+
+    private fun retryGame() {
+        requireActivity().supportFragmentManager.popBackStack(
+            GameFragment.NAME,
+            POP_BACK_STACK_INCLUSIVE
+        )
+    }
+
+    private fun parseArgs() {
+        requireArguments().parcelable<GameResult>(KEY_GAME_RESULT)?.let {
+            gameResult = it
+        }
+    }
+
+    companion object {
+        private const val KEY_GAME_RESULT = "game_result"
+
+        fun newInstance(gameResult: GameResult): GameFinishFragment {
+            return GameFinishFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(KEY_GAME_RESULT, gameResult)
+                }
+            }
+        }
+
     }
 }

@@ -18,27 +18,27 @@
         android:textStyle="bold"/>
 
     <Button
-        android:id="@+id/button_leve_test"
+        android:id="@+id/button_level_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/test"/>
 
     <Button
-        android:id="@+id/button_leve_easy"
+        android:id="@+id/button_level_easy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@android:color/holo_green_light"
         android:text="@string/easy"/>
 
     <Button
-        android:id="@+id/button_leve_normal"
+        android:id="@+id/button_level_normal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@android:color/holo_orange_light"
         android:text="@string/normal"/>
 
     <Button
-        android:id="@+id/button_leve_hard"
+        android:id="@+id/button_level_hard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@android:color/holo_red_light"
