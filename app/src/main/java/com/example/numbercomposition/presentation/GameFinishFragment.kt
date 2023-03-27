@@ -13,7 +13,7 @@ import com.example.numbercomposition.databinding.FragmentGameFinishBinding
 class GameFinishFragment : Fragment() {
 
     private val args by navArgs<GameFinishFragmentArgs>()
-    private val gameResult by lazy {
+    private val gameResultArgs by lazy {
         args.gameResult
     }
 
@@ -32,50 +32,12 @@ class GameFinishFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindListeners()
-        bindViews()
+        binding.gameResult = gameResultArgs
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun bindViews() {
-        binding.apply {
-            emojiResult.setImageResource(getSmileResId())
-            tvRequiredAnswers.text = String.format(
-                getString(R.string.required_answers),
-                gameResult.gameSettings.minCountOfRightAnswers
-            )
-            tvScoreAnswers.text = String.format(
-                getString(R.string.score_answers),
-                gameResult.countOfRightAnswers
-            )
-            tvRequiredPercentage.text = String.format(
-                getString(R.string.required_percentage),
-                gameResult.gameSettings.minPercentOfRightAnswers
-            )
-            tvScorePercentage.text = String.format(
-                getString(R.string.score_percentage),
-                getPercentOfRightAnswers()
-            )
-        }
-    }
-
-    private fun getSmileResId(): Int {
-        return if (gameResult.winner) {
-            R.drawable.ic_smile
-        } else {
-            R.drawable.ic_sad
-        }
-    }
-
-    private fun getPercentOfRightAnswers() = with(gameResult) {
-        if (countOfQuestion == 0) {
-            0
-        } else {
-            ((countOfRightAnswers / countOfQuestion.toDouble()) * 100).toInt()
-        }
     }
 
     private fun bindListeners() {
