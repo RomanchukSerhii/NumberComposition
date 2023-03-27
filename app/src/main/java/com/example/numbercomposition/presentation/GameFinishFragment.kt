@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
+import androidx.navigation.fragment.findNavController
 import com.example.numbercomposition.R
 import com.example.numbercomposition.databinding.FragmentGameFinishBinding
 import com.example.numbercomposition.domain.entity.GameResult
@@ -85,20 +86,10 @@ class GameFinishFragment : Fragment() {
         binding.buttonRetry.setOnClickListener {
             retryGame()
         }
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    retryGame()
-                }
-            })
     }
 
     private fun retryGame() {
-        requireActivity().supportFragmentManager.popBackStack(
-            GameFragment.NAME,
-            POP_BACK_STACK_INCLUSIVE
-        )
+        findNavController().popBackStack()
     }
 
     private fun parseArgs() {
@@ -108,7 +99,7 @@ class GameFinishFragment : Fragment() {
     }
 
     companion object {
-        private const val KEY_GAME_RESULT = "game_result"
+        const val KEY_GAME_RESULT = "game_result"
 
         fun newInstance(gameResult: GameResult): GameFinishFragment {
             return GameFinishFragment().apply {
